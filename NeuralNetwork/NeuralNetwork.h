@@ -233,5 +233,10 @@ public:
 
 		m_output = output;
 	}
+
+	const Output* get_output() const
+	{
+		return m_output;
+	}
 };
 

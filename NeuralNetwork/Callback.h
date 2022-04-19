@@ -35,7 +35,7 @@ public:
 	virtual void pre_trained_batch(const NeuralNetwork* net, const Matrix& x,
 								   const IntegerVector& y) {}
 
-	// После тренировкой батча
+	// После тренировки батча
 	virtual void post_trained_batch(const NeuralNetwork* net, const Matrix& x,
 		const Matrix& y) {}
 
