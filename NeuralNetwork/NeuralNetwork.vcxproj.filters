@@ -13,5 +13,48 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Файлы заголовков\Activation">
+      <UniqueIdentifier>{0bb9e387-1b01-413c-b31d-5188794c9231}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Callback">
+      <UniqueIdentifier>{13aad635-64f5-4da2-8992-19554a331c16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Layer">
+      <UniqueIdentifier>{8ee6b1c8-73b7-40e9-a100-449483da729a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Output">
+      <UniqueIdentifier>{3c9da784-fc0b-46ba-a44e-65cb9c42dc66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Optimizer">
+      <UniqueIdentifier>{3d3b8b98-0a09-41a4-b141-8eda704ee6c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Utils">
+      <UniqueIdentifier>{7685a483-ec19-436b-881e-5c170f04774d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Callback.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Config.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Layer.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Optimizer.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Output.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="RNG.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
