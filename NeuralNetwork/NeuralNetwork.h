@@ -234,9 +234,31 @@ public:
 		m_output = output;
 	}
 
+	/// <summary>
+	/// None
+	/// </summary>
+	/// <returns>Получить выходной слой</returns>
 	const Output* get_output() const
 	{
 		return m_output;
 	}
+
+	/// <summary>
+	/// Установить пользовательский вывод информации про обучение сетки.
+	/// </summary>
+	/// <param name="callback"> - ссылка на объект класса, который будет здесь работать.</param>
+	void set_callback(Callback& callback)
+	{
+		m_callback = &callback;
+	}
+
+	/// <summary>
+	/// Установить дефолтный вывод.
+	/// </summary>
+	void set_default_callback()
+	{
+		m_callback = &m_default_callback;
+	}
+
 };
 
