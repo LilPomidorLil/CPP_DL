@@ -6,6 +6,7 @@
 # include <stdexcept>
 # include "Config.h"
 # include "RNG.h"
+# include "Random.h"
 # include "Layer.h"
 # include "Output.h"
 # include "Callback.h"
@@ -260,5 +261,97 @@ public:
 		m_callback = &m_default_callback;
 	}
 
+
+	/// <summary>
+	/// Инициализация слоев сетки. Первая генерация весов сетки 
+	/// -
+	///  значения из нормального распределения.
+	/// </summary>
+	/// <param name="mu"> - мат. ожидание нормального распределения.</param>
+	/// <param name="sigma"> - дисперсия нормального распределения.</param>
+	/// <param name="seed"> - сид для рандома.</param>
+	void init(const Scalar& mu = Scalar(0), const Scalar& sigma = Scalar(0.01), int seed = -1)
+	{
+		check_unit_sizes();
+
+		if (seed > 0)
+		{
+			m_rng.seed(seed);
+		}
+
+		const int nlayer = count_layers();
+
+		for (int i = 0; i < nlayer; ++i)
+		{
+			m_layers[i]->init(mu, sigma, m_rng);
+		}
+	}
+
+	/// <summary>
+	/// Начать обучение сетки
+	/// </summary>
+	/// <typeparam name="DerivedX"></typeparam>
+	/// <typeparam name="DerivedY"></typeparam>
+	/// <param name="opt"> - оптимизатор</param>
+	/// <param name="x"> - вектор для обучения</param>
+	/// <param name="y"> - таргет</param>
+	/// <param name="batch_size"> - размер батча</param>
+	/// <param name="epoch"> - кол-во эпох при обучении сетки</param>
+	/// <param name="seed"> - сид для генерации случайных чисел</param>
+	/// <returns>True если все прошло хорошо</returns>
+	template <typename DerivedX, typename DerivedY>
+	bool fit(Optimizer& opt, const Eigen::MatrixBase<DerivedX>& x,
+		const Eigen::MatrixBase<DerivedY>& y,
+		int batch_size, int epoch, int seed = -1)
+	{
+
+		typedef typename Eigen::MatrixBase<DerivedX>::PlainObject PlainObjectX;
+		typedef typename Eigen::MatrixBase<DerivedY>::PlainObject PlainObjectY;
+		typedef Eigen::Matrix<typename PlainObjectX::Scalar, PlainObjectX::RowsAtCompileTime, PlainObjectX::ColsAtCompileTime>
+			XType;
+		typedef Eigen::Matrix<typename PlainObjectY::Scalar, PlainObjectY::RowsAtCompileTime, PlainObjectY::ColsAtCompileTime>
+			YType;
+
+		const int nlayer = count_layers();
+
+		if (nlayer <= 0) { return false; }
+
+		// сбрасываем значения оптимизатора
+		opt.reset();
+
+		if (seed > 0)
+		{
+			m_rng.seed(seed);
+		}
+
+		// начинаем генерить батчи
+		std::vector<XType> x_batches;
+		std::vector<YType> y_batches;
+
+		const int nbatch = internal::create_shuffled_batches(x, y, batch_size, m_rng, x_batches, y_batches);
+
+		// Передаем параметры в callback для дальнейшего отслеживания обучения
+
+		m_callback->m_nbatch = nbatch;
+		m_callback->m_nepoch = epoch;
+
+		// Начинаем процесс обучения
+		for (int e = 0; e < epoch; ++e)
+		{
+			m_callback->m_epoch_id = e;
+
+			for (int i = 0; i < nbatch; ++i)
+			{
+				m_callback->m_batch_id = i;
+				m_callback->pre_trained_batch(this, x_batches[i], y_batches[i]);
+				this->forward(x_batches[i]);
+				this->backprop(x_batches[i], y_batches[i]);
+				this->update(opt);
+				m_callback->post_trained_batch(this, x_batches[i], y_batches[i]);
+			}
+		}
+
+		return true;
+	}
 };
 

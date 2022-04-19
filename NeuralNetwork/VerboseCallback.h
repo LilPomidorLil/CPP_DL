@@ -16,7 +16,7 @@ public:
 	{
 		const Scalar loss = net->get_output()->loss();
 
-		std::cout << "[Epoch = " << m_epoch_id << ", batch = " << m_batch_id << "]\nLoss = " << loss << std::endl;
+		std::cout << "[Epoch = " << m_epoch_id << ", batch = " << m_batch_id << "] Loss = " << loss << std::endl;
 	}
 
 	void post_trained_batch(const NeuralNetwork* net,
@@ -25,6 +25,6 @@ public:
 	{
 		const Scalar loss = net->get_output()->loss();
 
-		std::cout << "[Epoch = " << m_epoch_id << ", batch = " << m_batch_id << "]\nLoss = " << loss << std::endl;
+		std::cout << "[Epoch = " << m_epoch_id << ", batch = " << m_batch_id << "] Loss = " << loss << std::endl;
 	}
 };

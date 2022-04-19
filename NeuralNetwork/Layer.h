@@ -40,7 +40,7 @@ public:
 	/// <returns>Кол-во выходящих нейронов</returns>
 	int out_size() const
 	{
-		return m_in_size;
+		return m_out_size;
 	}
 
 	/// <summary>

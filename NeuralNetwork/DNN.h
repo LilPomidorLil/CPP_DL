@@ -9,17 +9,27 @@
 # include "Config.h"
 
 
+
+
+# include "ReLU.h"
+
+
+
 # include "Layer.h"
+# include "FullyConnected.h"
 
 
 
 # include "Optimizer.h"
+# include "SGD.h"
 
 
 
 # include "Output.h"
+# include "RegressionMSE.h"
 
 
 
 # include "Callback.h"
+# include "VerboseCallback.h"
 
