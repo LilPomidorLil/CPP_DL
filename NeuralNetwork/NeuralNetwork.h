@@ -109,7 +109,7 @@ private:
 		m_output->evaluate(last_layer->output(), target);
 
 		// Если скрытый слой всего один, то 'prev_layer_data' будут выходными данными
-		
+
 		if (nlayer == 1)
 		{
 			first_layer->backprop(input, last_layer->backprop_data());
@@ -124,7 +124,7 @@ private:
 		for (int i = nlayer - 2; i > 0; --i)
 		{
 			m_layers[i]->backprop(m_layers[i - 1]->output(),
-							      m_layers[i + 1]->backprop_data());
+				m_layers[i + 1]->backprop_data());
 		}
 
 		// Теперь вычисляем грады для нулевого - входного слоя сетки
@@ -337,7 +337,7 @@ public:
 
 		// Начинаем процесс обучения
 		for (int e = 0; e < epoch; ++e)
-		{
+		{			
 			m_callback->m_epoch_id = e;
 
 			for (int i = 0; i < nbatch; ++i)
@@ -352,6 +352,17 @@ public:
 		}
 
 		return true;
+	}
+
+	Matrix predict(const Matrix& x)
+	{
+		const int nlayer = count_layers();
+
+		if (nlayer <= 0) { return Matrix(); }
+
+		this->forward(x);
+
+		return m_layers[nlayer - 1]->output();
 	}
 };
 
