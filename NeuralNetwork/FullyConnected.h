@@ -123,7 +123,10 @@ public:
         opt.update(db, b);
     }
 
-    // TODO: Доделать методы для сохранения сетки.
+    /// <summary>
+    /// Получить параметры одного слоя
+    /// </summary>
+    /// <returns>param - вектор параметров весов и смещения</returns>
     std::vector<Scalar> get_parametrs() const 
     { 
         std::vector<Scalar> res(m_weight.size() + m_bias.size()); // указали кол-во ячеек в этом векторе
@@ -133,7 +136,23 @@ public:
         return res;
     }
 
-    void set_parametrs(const std::vector<Scalar>& param) {};
+    /// <summary>
+    /// Установить пользовательские параметры для одного слоя
+    /// </summary>
+    /// <param name="param"> - вектор значений параметров весов и смещений</param>
+    void set_parametrs(const std::vector<Scalar>& param) 
+    {
+        // сделаем проверку на равенство длин массивов
+        // static_cast<int> - приведение длины массива к интовому типу данных
+        if (static_cast<int>param.size() != m_weight.size() + m_bias.size())
+        {
+            throw std::invalid_argument("[class FullyConnected]: Parameter size does not match. Check parameter size!");
+        }
+
+        // если размеры сходятся, то копируем переданные значения в наши массивы
+        std::copy(param.begin(), param.begin() + m_weight.size(), m_weight.data());
+        std::copy(param.begin() + m_weight.size(), param.end(), m_bias.data());
+    }
 
     std::vector<Scalar> get_derivatives() const { return std::vector<Scalar>(); }
 
