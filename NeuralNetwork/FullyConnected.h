@@ -50,6 +50,13 @@ public:
         m_db.resize(this->m_out_size);
     }
 
+    /// <summary>
+    /// Описание того, как толкаются данные по сетке внутри одного слоя.
+    /// Сначала получаем значения нейронов просто перемножая веса и предыдущие значения нейронов.
+    /// Добавляем к этому смещение.
+    /// Активируем.
+    /// </summary>
+    /// <param name="prev_layer_data"> - матрица значений нейронов предыдущего слоя</param>
     void forward(const Matrix& prev_layer_data) 
     {
         const int ncols = prev_layer_data.cols();
@@ -62,8 +69,25 @@ public:
         Activation::activate(m_z, m_a);
     }
 
+    /// <summary>
+    /// Возврат значений нейронов после активации
+    /// </summary>
+    /// <returns></returns>
     const Matrix& output() { return m_a; }
 
+    /// <summary>
+    /// Получаем производные этого слоя.
+    /// 
+    /// Нужно получить производные по 3 вещам.
+    /// 
+    /// 1. Производные весов - считаем Якобиан и умножаем на предыдущий слой
+    /// 2. Производные смещения - среднее по строкам производных весов
+    /// 3. Производные текущих значений нейронов - текущий вес на Якобиан.
+    /// 
+    /// Предыдущий / следующий слой считается слева направо.
+    /// </summary>
+    /// <param name="prev_layer_data"> - значения нейронов предыдущего слоя</param>
+    /// <param name="next_layer_data"> - значения нейронов следующего слоя</param>
     void backprop(const Matrix& prev_layer_data,
         const Matrix& next_layer_data) 
     {
@@ -77,8 +101,17 @@ public:
         m_din.noalias() = m_weight * dLz;
     }
 
+    /// <summary>
+    /// Получить производную нейронов этого слоя
+    /// </summary>
+    /// <returns>ссылка на информацию</returns>
     const Matrix& backprop_data() const { return m_din; }
 
+
+    /// <summary>
+    /// Обновление весов и смещений используя переданный алгоритм оптимизации (см. Optimizer)
+    /// </summary>
+    /// <param name="opt"> - объект класса Optimizer</param>
     void update(Optimizer& opt) 
     {
         ConstAlignedMapVec dw(m_dw.data(), m_dw.size());
@@ -90,6 +123,7 @@ public:
         opt.update(db, b);
     }
 
+    // TODO: Доделать методы для сохранения сетки.
     std::vector<Scalar> get_parametrs() const { return std::vector<Scalar>(); }
 
     void set_parametrs(const std::vector<Scalar>& param) {};
