@@ -124,7 +124,14 @@ public:
     }
 
     // TODO: Доделать методы для сохранения сетки.
-    std::vector<Scalar> get_parametrs() const { return std::vector<Scalar>(); }
+    std::vector<Scalar> get_parametrs() const 
+    { 
+        std::vector<Scalar> res(m_weight.size() + m_bias.size()); // указали кол-во ячеек в этом векторе
+        // просто копируем в этот массив все содержимое
+        std::copy(m_weight.data(), m_weight.data() + m_weight.size(), res.begin()); // все аргументы передаются в виде указателей. Откуда начинаем, где заканчиваем, куда начинаем ложить.
+        std::copy(m_bias.data(), m_bias.data() + m_bias.size(), res.begin() + m_weight.size());
+        return res;
+    }
 
     void set_parametrs(const std::vector<Scalar>& param) {};
 
