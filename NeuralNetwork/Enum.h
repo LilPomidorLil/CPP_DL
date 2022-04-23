@@ -46,4 +46,22 @@ namespace internal
 		throw std::invalid_argument("[function activation_id]: unknown type of activation func");
 		return -1;
 	}
+
+	enum OUTPUT_ENUM
+	{
+		REGRESSIONMSE = 0
+	};
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="type"> - тип выходного слоя</param>
+	/// <returns> - id выходного слоя</returns>
+	inline int output_id(std::string& type)
+	{
+		if (type == "RegressionMSE") return REGRESSIONMSE;
+
+		throw std::invalid_argument("[function output_id]: unknown type of output layer");
+		return -1;
+	}
 }
