@@ -394,5 +394,27 @@ public:
 
 		return res;
 	}
+
+	/// <summary>
+	/// Установить пользовательские параметры сетки
+	/// </summary>
+	/// <param name="param"> - матрица параметров</param>
+	void set_parameters(const std::vector < std::vector<Scalar> >& param)
+	{
+		int nlayer = count_layers();
+
+		if (static_cast<int>(param.size()) != nlayer)
+		{
+			throw std::invalid_argument("[class Neural Network]: param size does not match. check input param!");
+		}
+
+		for (int i = 0; i < nlayer; ++i)
+		{
+			m_layers[i]->set_parametrs(param[i]);
+		}			
+	}
+
+
+
 };
 
