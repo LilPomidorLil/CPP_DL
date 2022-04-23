@@ -1,8 +1,13 @@
-#pragma once
+﻿#pragma once
 
 # include <Eigen/Core>
 # include "RNG.h"
 # include "Config.h"
+
+///
+/// Здесь собраны утилиты для случайных зависимостей.
+/// 
+
 
 
 namespace internal
