@@ -7,6 +7,7 @@
 # include "Config.h"
 # include "Layer.h"
 # include "Random.h"
+# include "Enum.h"
 
 
 template <typename Activation>
@@ -171,5 +172,13 @@ public:
 
     std::string activation_type() const { return Activation::return_type(); }
 
-    void fill_meta_info(Meta& map, int index) const {}
+    void fill_meta_info(Meta& map, int index) const 
+    {
+        std::string ind = std::to_string(index);
+
+        map.insert(std::make_pair("Layer " + ind, internal::layer_id(layer_type());
+        map.insert(std::make_pair("Activation " + ind, internal::activation_id(activation_type())));
+        map.insert(std::make_pair("in_size " + ind, in_size()));
+        map.insert(std::make_pair("out_size " + ind, out_size()));
+    }
 };
