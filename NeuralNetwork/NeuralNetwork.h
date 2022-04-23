@@ -12,6 +12,7 @@
 # include "Callback.h"
 
 
+# include <iostream>
 ///
 /// Этот модуль описывает интерфейс нейронной сети, которая будет использоваться пользователем
 /// 
@@ -329,6 +330,8 @@ public:
 		std::vector<YType> y_batches;
 
 		const int nbatch = internal::create_shuffled_batches(x, y, batch_size, m_rng, x_batches, y_batches);
+
+		std::cout << "Batch init successfully!" << std::endl;
 
 		// Передаем параметры в callback для дальнейшего отслеживания обучения
 
