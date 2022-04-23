@@ -12,6 +12,7 @@
 
 
 # include "ReLU.h"
+# include "Sigmoid.h"
 
 
 
