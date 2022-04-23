@@ -10,6 +10,7 @@
 # include "Layer.h"
 # include "Output.h"
 # include "Callback.h"
+# include "Enum.h"
 
 
 # include <iostream>
@@ -151,18 +152,25 @@ private:
 		}
 	}
 
+	/// <summary>
+	/// Заполняем словарь для дальнейшего экспортирования сетки
+	/// </summary>
+	/// <returns></returns>
 	Meta get_meta_info() const
 	{
 		const int nlayer = count_layers();
 		Meta map;
 		map.insert(std::make_pair("Nlayers", nlayer));
 
+		// пробегаемся по всем слоям и вызываем метод сбора информации с одного слоя
 		for (int i = 0; i < nlayer; ++i)
 		{
 			m_layers[i]->fill_meta_info(map, i);
 		}
 
-		// TODO: довести метод до ума
+		// добавляем информацию о выходном слое
+		map.insert(std::make_pair("OutputLayer", internal::output_id(m_output->output_type())));
+		return map;
 	}
 
 public:

@@ -19,7 +19,7 @@ namespace internal
 	/// </summary>
 	/// <param name="type"> - Layers::layer_type()</param>
 	/// <returns> - id слоя</returns>
-	inline int layer_id(std::string& type)
+	inline int layer_id(const std::string& type)
 	{
 		if (type == "FullyConnected") return FULLYCONNECTED;
 
@@ -38,7 +38,7 @@ namespace internal
 	/// </summary>
 	/// <param name="type"> - Activation::return_type()</param>
 	/// <returns> - id функции активации</returns>
-	inline int activation_id(std::string& type)
+	inline int activation_id(const std::string& type)
 	{
 		if (type == "ReLU") return RELU;
 		if (type == "Sigmoid") return SIGMOID;
@@ -57,7 +57,7 @@ namespace internal
 	/// </summary>
 	/// <param name="type"> - Output::output_type()</param>
 	/// <returns> - id выходного слоя</returns>
-	inline int output_id(std::string& type)
+	inline int output_id(const std::string& type)
 	{
 		if (type == "RegressionMSE") return REGRESSIONMSE;
 
