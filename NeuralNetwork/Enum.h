@@ -15,15 +15,35 @@ namespace internal
 	};
 
 	/// <summary>
-	/// Используя перечисление узнаем какой это тип слоя
+	/// 
 	/// </summary>
 	/// <param name="type"> - Layers::layer_type()</param>
-	/// <returns></returns>
+	/// <returns> - id слоя</returns>
 	inline int layer_id(std::string& type)
 	{
 		if (type == "FullyConnected") return FULLYCONNECTED;
 
 		throw std::invalid_argument("[function layer_id]: unknown type of layer");
+		return -1;
+	}
+
+	enum ACTIVATION_FUNC_ENUM
+	{
+		RELU = 0,
+		SIGMOID
+	};
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="type"> - тип функции активации</param>
+	/// <returns> - id функции активации</returns>
+	inline int activation_id(std::string& type)
+	{
+		if (type == "ReLU") return RELU;
+		if (type == "Sigmoid") return SIGMOID;
+
+		throw std::invalid_argument("[function activation_id]: unknown type of activation func");
 		return -1;
 	}
 }
