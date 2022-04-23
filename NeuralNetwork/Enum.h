@@ -36,7 +36,7 @@ namespace internal
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <param name="type"> - тип функции активации</param>
+	/// <param name="type"> - Activation::return_type()</param>
 	/// <returns> - id функции активации</returns>
 	inline int activation_id(std::string& type)
 	{
@@ -55,7 +55,7 @@ namespace internal
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <param name="type"> - тип выходного слоя</param>
+	/// <param name="type"> - Output::output_type()</param>
 	/// <returns> - id выходного слоя</returns>
 	inline int output_id(std::string& type)
 	{
