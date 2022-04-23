@@ -145,7 +145,7 @@ public:
     {
         // сделаем проверку на равенство длин массивов
         // static_cast<int> - приведение длины массива к интовому типу данных
-        if (static_cast<int>param.size() != m_weight.size() + m_bias.size())
+        if (static_cast<int>(param.size()) != (m_weight.size() + m_bias.size()))
         {
             throw std::invalid_argument("[class FullyConnected]: Parameter size does not match. Check parameter size!");
         }
@@ -164,7 +164,7 @@ public:
         std::vector<Scalar> res(m_dw.size() + m_db.size());
 
         std::copy(m_dw.data(), m_dw.data() + m_dw.size(), res.begin());
-        std::copy(m_db.data(), m_db.data() + m_db.size(), res.begin + m_dw.size());
+        std::copy(m_db.data(), m_db.data() + m_db.size(), res.begin() + m_dw.size());
         return res;
     }
 
@@ -176,7 +176,7 @@ public:
     {
         std::string ind = std::to_string(index);
 
-        map.insert(std::make_pair("Layer " + ind, internal::layer_id(layer_type());
+        map.insert(std::make_pair("Layer " + ind, internal::layer_id(layer_type())));
         map.insert(std::make_pair("Activation " + ind, internal::activation_id(activation_type())));
         map.insert(std::make_pair("in_size " + ind, in_size()));
         map.insert(std::make_pair("out_size " + ind, out_size()));

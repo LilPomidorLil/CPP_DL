@@ -375,5 +375,24 @@ public:
 
 		return m_layers[nlayer - 1]->output();
 	}
+
+
+	/// <summary>
+	/// Получить параметры сетки
+	/// </summary>
+	/// <returns></returns>
+	std::vector < std::vector<Scalar> > get_parameters() const
+	{
+		int nlayer = count_layers();
+		std::vector < std::vector<Scalar> > res;
+		res.reserve(nlayer); // зарезервировали место для большей оптимизации
+
+		for (int i = 0; i < nlayer; ++i)
+		{
+			res.push_back(m_layers[i]->get_parametrs());
+		}
+
+		return res;
+	}
 };
 
