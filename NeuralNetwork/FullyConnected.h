@@ -25,7 +25,7 @@ protected:
     Vector m_db;     // Производная смещения
     Matrix m_z;      // Значения нейронов до активации
     Matrix m_a;      // Значения нейронов после активации
-    Matrix m_din;    // Значения нейронов после backprop
+    Matrix m_din;    // Проивзодная значений нейронов после backprop
 
 public:
     FullyConnected(const int in_size, const int out_size) :
@@ -154,7 +154,18 @@ public:
         std::copy(param.begin() + m_weight.size(), param.end(), m_bias.data());
     }
 
-    std::vector<Scalar> get_derivatives() const { return std::vector<Scalar>(); }
+    /// <summary>
+    /// Получить производные весов и смщения одного слоя
+    /// </summary>
+    /// <returns></returns>
+    std::vector<Scalar> get_derivatives() const 
+    {
+        std::vector<Scalar> res(m_dw.size() + m_db.size());
+
+        std::copy(m_dw.data(), m_dw.data() + m_dw.size(), res.begin());
+        std::copy(m_db.data(), m_db.data() + m_db.size(), res.begin + m_dw.size());
+        return res;
+    }
 
     std::string layer_type() const { return "FullyConnected"; }
 
