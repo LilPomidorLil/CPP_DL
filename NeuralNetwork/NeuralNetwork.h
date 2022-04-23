@@ -415,6 +415,22 @@ public:
 	}
 
 
+	/// <summary>
+	/// Получить производные всех слоев
+	/// </summary>
+	/// <returns></returns>
+	std::vector < std::vector<Scalar> > get_derivatives() const
+	{
+		int nlayer = count_layers();
+		std::vector < std::vector<Scalar> > res;
+		res.reserve(nlayer);
 
+		for (int i = 0; i < nlayer; ++i)
+		{
+			res.push_back(m_layers[i]->get_derivatives());
+		}
+
+		return res;
+	}
 };
 
